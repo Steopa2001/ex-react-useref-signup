@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 
 const letters = "abcdefghijklmnopqrstuvwxyz";
 const numbers = "0123456789";
@@ -6,13 +6,16 @@ const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
 
 function App() {
   //Campi controllati
-  const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [specialization, setSpecialization] = useState("");
-  const [experienceYears, setExperienceYears] = useState("");
   const [description, setDescription] = useState("");
 
+  //Campi Non Controllati useRef()
+  const fullNameRef = useRef();
+  const specializationRef = useRef();
+  const experienceYearsRef = useRef();
+
+  //Validazione
   const isUsernameValid = useMemo(() => {
     const charsValid = username
       .split("")
@@ -40,6 +43,12 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    //Valori non controllati
+    const fullName = fullNameRef.current.value;
+    const specialization = specializationRef.current.value;
+    const experienceYears = experienceYearsRef.current.value;
+
     if (
       !fullName.trim() ||
       !username.trim() ||
@@ -78,11 +87,7 @@ function App() {
       <form onSubmit={handleSubmit}>
         <label>
           <p>Nome Completo</p>
-          <input
-            type="text"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
+          <input type="text" ref={fullNameRef} />
         </label>
         <label>
           <p>Username</p>
@@ -116,11 +121,8 @@ function App() {
         </label>
         <label>
           <p>Specializzazione</p>
-          <select
-            value={specialization}
-            onChange={(e) => setSpecialization(e.target.value)}
-          >
-            <option value="Seleziona">Seleziona Specializzazione</option>
+          <select ref={specializationRef}>
+            <option value="">Seleziona Specializzazione</option>
             <option value="Full Stack">Full Stack</option>
             <option value="Front-end">Front-end</option>
             <option value="Back-end">Back-end</option>
@@ -128,11 +130,7 @@ function App() {
         </label>
         <label>
           <p>Anni di esperienza</p>
-          <input
-            type="number"
-            value={experienceYears}
-            onChange={(e) => setExperienceYears(e.target.value)}
-          />
+          <input type="number" ref={experienceYearsRef} />
         </label>
         <label>
           <p>Descrizione</p>
