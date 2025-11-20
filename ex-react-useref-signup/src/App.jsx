@@ -73,11 +73,11 @@ function App() {
       description,
     });
     // RESET DEI CAMPI
-    fullNameRef("");
+    fullNameRef.current.value = "";
     setUsername("");
     setPassword("");
-    specializationRef("");
-    experienceYearsRef("");
+    specializationRef.current.value = "";
+    experienceYearsRef.current.value = "";
     setDescription("");
   };
 
