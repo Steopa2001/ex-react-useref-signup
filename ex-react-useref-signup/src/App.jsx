@@ -1,4 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+
+const letters = "abcdefghijklmnopqrstuvwxyz";
+const numbers = "0123456789";
+const symbols = "!@#$%^&*()-_=+[]{}|;:'\",.<>?/`~";
 
 function App() {
   //Campi controllati
@@ -9,6 +13,31 @@ function App() {
   const [experienceYears, setExperienceYears] = useState("");
   const [description, setDescription] = useState("");
 
+  const isUsernameValid = useMemo(() => {
+    const charsValid = username
+      .split("")
+      .every(
+        (char) => letters.includes(char.toLowerCase()) || numbers.includes(char)
+      );
+
+    return charsValid && username.trim().length >= 6;
+  }, [username]);
+
+  const isPasswordValid = useMemo(() => {
+    return (
+      password.trim().length >= 8 &&
+      password.split("").some((char) => letters.includes(char)) &&
+      password.split("").some((char) => numbers.includes(char)) &&
+      password.split("").some((char) => symbols.includes(char))
+    );
+  }, [password]);
+
+  const isDescriptionValid = useMemo(() => {
+    return (
+      description.trim().length >= 100 && description.trim().length <= 1000
+    );
+  }, [description]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -18,7 +47,10 @@ function App() {
       !specialization.trim() ||
       !experienceYears.trim() ||
       experienceYears <= 0 ||
-      !description.trim()
+      !description.trim() ||
+      !isUsernameValid ||
+      !isPasswordValid ||
+      !isDescriptionValid
     ) {
       alert("Errore: Compilare tutti i campi correttamente.");
       return;
@@ -59,6 +91,13 @@ function App() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {username.trim() && (
+            <p style={{ color: isUsernameValid ? "green" : "red" }}>
+              {isUsernameValid
+                ? "Username valido"
+                : "Deve avere almeno 6 caratteri alfanumerici"}
+            </p>
+          )}
         </label>
         <label>
           <p>Password</p>
@@ -67,6 +106,13 @@ function App() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {password.trim() && (
+            <p style={{ color: isPasswordValid ? "green" : "red" }}>
+              {isPasswordValid
+                ? "Password valida"
+                : "Deve avere almeno 8 caratteri, 1 lettera, 1 numero, 1 simbolo"}
+            </p>
+          )}
         </label>
         <label>
           <p>Specializzazione</p>
@@ -94,6 +140,15 @@ function App() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          {description.trim() && (
+            <p style={{ color: isDescriptionValid ? "green" : "red" }}>
+              {isDescriptionValid
+                ? "Descrizione valida"
+                : `Deve avere tra 100 e 1000 caratteri (${
+                    description.trim().length
+                  })`}
+            </p>
+          )}
         </label>
         <button type="submit">Registrati</button>
       </form>
