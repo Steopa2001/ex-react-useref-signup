@@ -1,0 +1,99 @@
+:root{
+  --bg:#f7fafc;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#6b7280;
+  --accent:#2563eb;
+  --radius:10px;
+}
+
+/* page */
+body{
+  margin:0;
+  font-family: Inter, system-ui, Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+
+/* card */
+.app-card{
+  width:100%;
+  max-width:720px;
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:0 6px 20px rgba(15,23,42,0.06);
+  box-sizing:border-box;
+}
+
+.app-card h1{
+  margin:0 0 6px 0;
+  font-size:20px;
+}
+.app-card p.lead{
+  margin:0 0 14px 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+/* simple form grid */
+form{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-size:13px;
+}
+
+input, select, textarea{
+  padding:10px;
+  border:1px solid #e6e9ee;
+  border-radius:8px;
+  font-size:14px;
+  box-sizing:border-box;
+}
+
+textarea{min-height:100px; resize:vertical}
+
+/* full width fields */
+.full-width{grid-column:1 / -1}
+
+/* submit area */
+.form-actions{grid-column:1 / -1; display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:6px}
+
+.btn{
+  background:var(--accent);
+  color:white;
+  border:0;
+  padding:10px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.btn.secondary{
+  background:transparent;
+  color:var(--muted);
+  border:1px solid #e6e9ee;
+}
+
+/* small responsive tweak */
+@media (max-width:600px){
+  form{grid-template-columns:1fr}
+}
+
+/* focus for accessibility */
+:focus{outline:3px solid rgba(37,99,235,0.12); outline-offset:2px}
+
+/* helper classes */
+.mt-8{margin-top:8px}
+.hidden{display:none}

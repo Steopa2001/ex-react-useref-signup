@@ -1,7 +1,155 @@
-
+import { useState } from "react";
 
 function App() {
+  //Campi controllati
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [specialization, setSpecialization] = useState("");
+  const [experienceYears, setExperienceYears] = useState("");
+  const [description, setDescription] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      !fullName.trim() ||
+      !username.trim() ||
+      !password.trim() ||
+      !specialization.trim() ||
+      !experienceYears.trim() ||
+      experienceYears <= 0 ||
+      !description.trim()
+    ) {
+      alert("Errore: Compilare tutti i campi correttamente.");
+      return;
+    }
+    console.log("Submit effettuto:", {
+      fullName,
+      username,
+      password,
+      specialization,
+      experienceYears,
+      description,
+    });
+    // RESET DEI CAMPI
+    setFullName("");
+    setUsername("");
+    setPassword("");
+    setSpecialization("");
+    setExperienceYears("");
+    setDescription("");
+  };
+
+  return (
+    <div>
+      <h1>Web Developer Signup</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <p>Nome Completo</p>
+          <input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Username</p>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Password</p>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Specializzazione</p>
+          <select
+            value={specialization}
+            onChange={(e) => setSpecialization(e.target.value)}
+          >
+            <option value="Seleziona">Seleziona Specializzazione</option>
+            <option value="Full Stack">Full Stack</option>
+            <option value="Front-end">Front-end</option>
+            <option value="Back-end">Back-end</option>
+          </select>
+        </label>
+        <label>
+          <p>Anni di esperienza</p>
+          <input
+            type="number"
+            value={experienceYears}
+            onChange={(e) => setExperienceYears(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Descrizione</p>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </label>
+        <button type="submit">Registrati</button>
+      </form>
+    </div>
+  );
 }
 
-export default App
+export default App;
+
+// 📌 Milestone 1: Creare un Form con Campi Controllati
+
+//     Crea un form di registrazione con i seguenti campi controllati (gestiti con useState):
+
+//     ✅ Nome completo (input di testo)
+
+//     ✅ Username (input di testo)
+
+//     ✅ Password (input di tipo password)
+
+//     ✅ Specializzazione (select con opzioni: "Full Stack", "Frontend", "Backend")
+
+//     ✅ Anni di esperienza (input di tipo number)
+
+//     ✅ Breve descrizione sullo sviluppatore (textarea)
+
+//     Aggiungi una validazione al submit, verificando che:
+//         Tutti i campi siano compilati
+//         L'input Anni di esperienza sia un numero positivo
+//         La Specializzazione sia selezionata
+
+//     Al submit, se il form è valido, stampa in console i dati.
+
+// 📌 Milestone 2: Validare in tempo reale
+
+//     Aggiungere la validazione in tempo reale dei seguenti campi:
+
+//     ✅ Username: Deve contenere solo caratteri alfanumerici e almeno 6 caratteri (no spazi o simboli).
+
+//     ✅ Password: Deve contenere almeno 8 caratteri, 1 lettera, 1 numero e 1 simbolo.
+
+//     ✅ Descrizione: Deve contenere tra 100 e 1000 caratteri (senza spazi iniziali e finali).
+
+//     Suggerimento: Per semplificare la validazione, puoi definire tre stringhe con i caratteri validi e usare .includes() per controllare se i caratteri appartengono a una di queste categorie:
+
+// const letters = "abcdefghijklmnopqrstuvwxyz";
+
+// const numbers = "0123456789";
+
+// const symbols = "!@#$%^&*()-_=+[]{}|;:'\\",.<>?/`~";
+
+//     Per ciascuno dei campi validati in tempo reale, mostrare un messaggio di errore (rosso) nel caso non siano validi, oppure un messaggio di conferma (verde) nel caso siano validi.
+
+// 📌 Milestone 3: Convertire i Campi Non Controllati
+
+// Non tutti i campi del form necessitano di essere aggiornati a ogni carattere digitato. Alcuni di essi non influenzano direttamente l’interfaccia mentre l’utente li compila, quindi è possibile gestirli in modo più efficiente.
+
+//     Analizza il form: Identifica quali campi devono rimanere controllati e quali invece possono essere non controllati senza impattare l’esperienza utente.
+//     Converti i campi non controllati: Usa useRef() per gestirli e recuperare il loro valore solo al momento del submit.
+//     Assicurati che la validazione continui a funzionare: Anche se un campo non è controllato, deve comunque essere validato correttamente quando l’utente invia il form.
